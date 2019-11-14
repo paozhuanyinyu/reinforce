@@ -17,11 +17,14 @@ reinforce {
     aliasPassword = "reinforce92"
     apkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "release"
     reinforcedApkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "jiagu"
+    enableQihu = true
     qihu {
         sourcePath = "/Users/yukai/Documents/jiagu/360/jiagu/jiagu.jar"
         account = qihuAccount
         password = qihuPassword
     }
+
+    enableLegu = true
     legu {
         sourcePath = "/Users/yukai/Documents/jiagu/tencent/ms-shield.jar"
         secretId = leguSecretId

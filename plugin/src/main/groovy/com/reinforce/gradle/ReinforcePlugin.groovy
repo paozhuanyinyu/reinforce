@@ -28,12 +28,12 @@ class ReinforcePlugin implements Plugin<Project>{
         // apksigner路径
         def apksignerPath = ANDROID_HOME + File.separator + "build-tools" + File.separator + buildToolsVersion + File.separator + "apksigner"
 
-        println("apksignerPath: " + apksignerPath)
+        println("apksigner路径: " + apksignerPath)
 
         //zipalign路径
         def zipalignPath = ANDROID_HOME + File.separator + "build-tools" + File.separator + buildToolsVersion + File.separator + "zipalign"
 
-        println("zipalignPath: " + zipalignPath)
+        println("zipalign路径: " + zipalignPath)
 
         project.extensions.create("reinforce",ArgumentsBean)
         project.reinforce.extensions.create("qihu",QihuArguments)
@@ -46,20 +46,31 @@ class ReinforcePlugin implements Plugin<Project>{
                 println("assemble: " + assemble)
                 project.task("assemble${variantName}Reinforce").dependsOn(assemble).doFirst {
                     println("doFirst")
-                    println("keystorePath: " + project.reinforce.keystorePath)
-                    println("keystorePassword: " + project.reinforce.keystorePassword)
-                    println("alias: " + project.reinforce.alias)
-                    println("aliasPassword: " + project.reinforce.aliasPassword)
-                    println("apkDir: " + project.reinforce.apkDir)
-                    println("reinforcedApkDir: " + project.reinforce.reinforcedApkDir)
+                    println("apk目录: " + project.reinforce.apkDir)
+                    println("加固之后apk存放目录: " + project.reinforce.reinforcedApkDir)
 
-                    println("legu sourcePath: " + project.reinforce.legu.sourcePath)
-                    println("legu secretId: " + project.reinforce.legu.secretId)
-                    println("legu secretKey: " + project.reinforce.legu.secretKey)
+                    println("签名文件路径: " + project.reinforce.keystorePath)
+                    println("签名文件路密码: " + project.reinforce.keystorePassword)
+                    println("签名文件别名: " + project.reinforce.alias)
+                    println("签名文件别名密码: " + project.reinforce.aliasPassword)
+                    if(!checkSignInfo(project)){
+                        project.logger.error("apk签名信息配置有误,请检查签名信息参数")
+                        throw new ProjectConfigurationException("apk签名信息配置有误,请检查签名信息参数")
+                    }
 
-                    println("qihu sourcePath: " + project.reinforce.qihu.sourcePath)
-                    println("qihu account: " + project.reinforce.qihu.account)
-                    println("qihu password: " + project.reinforce.qihu.password)
+                    println("是否开启乐固加固：" + project.reinforce.enableLegu)
+                    if(project.reinforce.enableLegu){
+                        println("乐固jar路径: " + project.reinforce.legu.sourcePath)
+                        println("乐固secretId: " + project.reinforce.legu.secretId)
+                        println("乐固secretKey: " + project.reinforce.legu.secretKey)
+                    }
+                    println("是否开启360加固：" + project.reinforce.enableQihu)
+                    if(project.reinforce.enableQihu){
+                        println("360加固jar包路径: " + project.reinforce.qihu.sourcePath)
+                        println("360账户名: " + project.reinforce.qihu.account)
+                        println("360账户密码: " + project.reinforce.qihu.password)
+                    }
+
                 }.doLast {
 
                     String apkDirPath = project.reinforce.apkDir
@@ -74,13 +85,18 @@ class ReinforcePlugin implements Plugin<Project>{
                     if(!reinforcedApkDir.exists()){
                         reinforcedApkDir.mkdirs()
                     }
-
                     for(File file : apkDir.listFiles()) {
                         if (file.exists() && file.getName().endsWith(".apk")) {
                             //360加固
-                            qihuReinforce(project,file)
+                            if(checkQihu(project)){
+                                println("开始360加固...")
+//                                qihuReinforce(project,file)
+                            }
                             //乐固加固
-                            leguReinforce(project,apksignerPath,zipalignPath,file)
+                            if(checkLegu(project)){
+                                println("开始乐固加固...")
+//                                leguReinforce(project,apksignerPath,zipalignPath,file)
+                            }
 
                         }
                     }
@@ -89,6 +105,73 @@ class ReinforcePlugin implements Plugin<Project>{
             }
         }
     }
+    /**
+     * 检测360加固必须配置的参数
+     * @param project
+     * @return
+     */
+    boolean checkQihu(Project project){
+        if(project.reinforce.enableQihu){
+            if(checkStringIsEmpty(project.reinforce.qihu.sourcePath)){
+                project.logger.error("没有配置360加固jar包路径")
+                return false
+            }else if(checkStringIsEmpty(project.reinforce.qihu.account)){
+                project.logger.error("没有配置360账号名")
+                return false
+            }else if(checkStringIsEmpty(project.reinforce.qihu.password)){
+                project.logger.error("没有配置360账户密码")
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    /**
+     * 检测乐固加固必须配置的参数
+     * @param project
+     * @return
+     */
+    boolean checkLegu(Project project){
+        if(project.reinforce.enableLegu){
+            if(checkStringIsEmpty(project.reinforce.legu.sourcePath)){
+                project.logger.error("没有配置乐固加固jar包路径")
+                return false
+            }else if(checkStringIsEmpty(project.reinforce.legu.secretId)){
+                project.logger.error("没有配置乐固secretId")
+                return false
+            }else if(checkStringIsEmpty(project.reinforce.legu.secretKey)){
+                project.logger.error("没有配置乐固secretKey")
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    /**
+     * 检测签名信息
+     * @param project
+     * @return 签名信息4个中只要其中有一个没有配置就返回false，否则返回true
+     */
+    boolean checkSignInfo(Project project){
+        if(checkStringIsEmpty(project.reinforce.keystorePath)
+                || checkStringIsEmpty(project.reinforce.keystorePassword)
+                || checkStringIsEmpty(project.reinforce.alias)
+                || checkStringIsEmpty(project.reinforce.aliasPassword)){
+            return false
+        }
+        return true
+    }
+    boolean checkStringIsEmpty(String str){
+        if(str == null || str.trim().length() == 0){
+            return true
+        }
+        return false
+    }
+    /**
+     * 360加固
+     * @param project
+     * @param file apk文件对象
+     */
     void qihuReinforce(Project project, File file){
         String loginCommand = "java -jar " +
                 project.reinforce.qihu.sourcePath +
@@ -135,6 +218,13 @@ class ReinforcePlugin implements Plugin<Project>{
         }
         println("360加固完成")
     }
+    /**
+     * 乐固加固
+     * @param project
+     * @param apksignerPath apksigner路径
+     * @param zipalignPath zipalign路径
+     * @param file apk文件对象
+     */
     void leguReinforce(Project project, def apksignerPath, def zipalignPath, File file){
         //加固
         String fileName = file.getName()
@@ -190,7 +280,11 @@ class ReinforcePlugin implements Plugin<Project>{
         }
 
     }
-
+    /**
+     * Java执行Shell命令
+     * @param cmd 命令
+     * @return
+     */
     CommandResult executeCommand(String cmd){
         def serr = new StringBuilder()
         def proc

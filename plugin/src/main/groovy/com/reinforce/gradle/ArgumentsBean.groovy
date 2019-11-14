@@ -9,6 +9,8 @@ class ArgumentsBean{
     def aliasPassword = ""
     def apkDir = ""
     def reinforcedApkDir = ""
+    def enableQihu = false
+    def enableLegu = false
 
     QihuArguments qihu = new QihuArguments()
     LeguArguments legu = new LeguArguments()
@@ -54,5 +56,13 @@ class ArgumentsBean{
 
     void reinforcedApkDir(reinforcedApkDir) {
         this.reinforcedApkDir = reinforcedApkDir
+    }
+
+    void enableQihu(enableQihu) {
+        this.enableQihu = enableQihu
+    }
+
+    void enableLegu(enableLegu) {
+        this.enableLegu = enableLegu
     }
 }
