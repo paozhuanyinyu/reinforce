@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'reinforce'
+
+reinforce {
+    def prpe = new Properties()
+    def input = project.rootProject.file('local.properties').newInputStream()
+    prpe.load(input)
+    def leguSecretId = prpe.getProperty('path.legu.secretId')
+    def leguSecretKey = prpe.getProperty('path.legu.secretKey')
+    def qihuAccount = prpe.getProperty('path.qihu.account')
+    def qihuPassword = prpe.getProperty('path.qihu.password')
+
+
+    keystorePath = rootDir.getAbsolutePath() + File.separator + "reinforce_test.jks"
+    keystorePassword = "reinforce92"
+    alias = "reinforce_alisa"
+    aliasPassword = "reinforce92"
+    apkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "release"
+    reinforcedApkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "jiagu"
+    qihu {
+        sourcePath = "/Users/yukai/Documents/jiagu/360/jiagu/jiagu.jar"
+        account = qihuAccount
+        password = qihuPassword
+    }
+    legu {
+        sourcePath = "/Users/yukai/Documents/jiagu/tencent/ms-shield.jar"
+        secretId = leguSecretId
+        secretKey = leguSecretKey
+    }
+}
+
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.reinforce"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            def prpe = new Properties()
+            def input = project.rootProject.file('local.properties').newInputStream()
+            prpe.load(input)
+
+            storeFile new File(prpe.getProperty('path.store.file'))
+            storePassword prpe.getProperty('path.store.password')
+            keyAlias prpe.getProperty('path.alias')
+            keyPassword prpe.getProperty('path.alias.password')
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+    buildTypes {
+        debug {
+            zipAlignEnabled true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            zipAlignEnabled true
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}
