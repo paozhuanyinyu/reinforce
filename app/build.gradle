@@ -15,7 +15,7 @@ apply plugin: 'com.android.application'
 //    keystorePassword = "reinforce92"
 //    alias = "reinforce_alisa"
 //    aliasPassword = "reinforce92"
-//    apkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "release"
+//    apkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk"
 //    reinforcedApkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "jiagu"
 //    enableQihu = true
 //    qihu {

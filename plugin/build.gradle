@@ -1,6 +1,8 @@
 apply plugin: 'groovy'
+//发布到本地
 //apply plugin: 'maven'
-apply plugin: 'com.github.dcendents.android-maven' //发布到JitPack
+//发布到JitPack
+apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.paozhuanyinyu' //发布到JitPack
 
 dependencies {
@@ -18,7 +20,7 @@ repositories {
 //            //设置插件的GAV参数
 //            pom.groupId = 'com.kaige.reinforce'
 //            pom.artifactId = 'plugin'
-//            pom.version = '1.0.0'
+//            pom.version = '1.0.1'
 //            //文件发布到本地目录
 //            repository(url: uri('/Users/yukai/Documents/project/android/plugin/maven/repo'))
 //        }

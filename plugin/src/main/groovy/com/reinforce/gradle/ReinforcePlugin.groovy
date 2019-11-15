@@ -84,24 +84,34 @@ class ReinforcePlugin implements Plugin<Project>{
                     File reinforcedApkDir = new File(reinforcedApkDirPath)
                     if(!reinforcedApkDir.exists()){
                         reinforcedApkDir.mkdirs()
+                        reinforcedApkDir.setWritable(true,false)
+                        reinforcedApkDir.setReadable(true,false)
                     }
-                    //遍历加固
-                    for(File file : apkDir.listFiles()) {
-                        if (file.exists() && file.getName().endsWith(".apk")) {
-                            //360加固
-                            if(checkQihu(project)){
-                                println("开始360加固...")
-                                qihuReinforce(project,file)
-                            }
-                            //乐固加固
-                            if(checkLegu(project)){
-                                println("开始乐固加固...")
-                                leguReinforce(project,apksignerPath,zipalignPath,file)
-                            }
+                    println("加固包存放目录是否可读写: " + (reinforcedApkDir.canRead() && reinforcedApkDir.canWrite()))
+                    loopFile(project,apksignerPath,zipalignPath,apkDir)
 
-                        }
+                }
+            }
+        }
+    }
+    void loopFile(Project project, def apksignerPath, def zipalignPath,File dir){
+        //遍历加固
+        for(File file : dir.listFiles()) {
+            if(file.exists()){
+                if(file.isDirectory()){
+                    loopFile(project,apksignerPath,zipalignPath,file)
+                }else if(file.isFile() && file.getName().endsWith(".apk")){
+                    println("apk路径： " + file.getAbsolutePath())
+                    //360加固
+                    if(checkQihu(project)){
+                        println("开始360加固...")
+                        qihuReinforce(project,file)
                     }
-
+                    //乐固加固
+                    if(checkLegu(project)){
+                        println("开始乐固加固...")
+                        leguReinforce(project,apksignerPath,zipalignPath,file)
+                    }
                 }
             }
         }
