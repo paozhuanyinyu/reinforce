@@ -43,35 +43,35 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    signingConfigs {
-        release {
-            def prpe = new Properties()
-            def input = project.rootProject.file('local.properties').newInputStream()
-            prpe.load(input)
-
-            storeFile new File(prpe.getProperty('path.store.file'))
-            storePassword prpe.getProperty('path.store.password')
-            keyAlias prpe.getProperty('path.alias')
-            keyPassword prpe.getProperty('path.alias.password')
-
-            v1SigningEnabled true
-            v2SigningEnabled true
-        }
-    }
-    buildTypes {
-        debug {
-            zipAlignEnabled true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-        release {
-            zipAlignEnabled true
-            minifyEnabled true
-            signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+//    signingConfigs {
+//        release {
+//            def prpe = new Properties()
+//            def input = project.rootProject.file('local.properties').newInputStream()
+//            prpe.load(input)
+//
+//            storeFile new File(prpe.getProperty('path.store.file'))
+//            storePassword prpe.getProperty('path.store.password')
+//            keyAlias prpe.getProperty('path.alias')
+//            keyPassword prpe.getProperty('path.alias.password')
+//
+//            v1SigningEnabled true
+//            v2SigningEnabled true
+//        }
+//    }
+//    buildTypes {
+//        debug {
+//            zipAlignEnabled true
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+//        }
+//        release {
+//            zipAlignEnabled true
+//            minifyEnabled true
+//            signingConfig signingConfigs.release
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//    }
 
 
 }
