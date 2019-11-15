@@ -24,15 +24,12 @@ class ReinforcePlugin implements Plugin<Project>{
 
         //获取buildToolsVersion
         def buildToolsVersion = project.extensions.getByName("android").getAt("buildToolsVersion")
-
         // apksigner路径
         def apksignerPath = ANDROID_HOME + File.separator + "build-tools" + File.separator + buildToolsVersion + File.separator + "apksigner"
-
         println("apksigner路径: " + apksignerPath)
 
         //zipalign路径
         def zipalignPath = ANDROID_HOME + File.separator + "build-tools" + File.separator + buildToolsVersion + File.separator + "zipalign"
-
         println("zipalign路径: " + zipalignPath)
 
         project.extensions.create("reinforce",ArgumentsBean)
@@ -72,30 +69,31 @@ class ReinforcePlugin implements Plugin<Project>{
                     }
 
                 }.doLast {
-
+                    //检测apk目录是否存在
                     String apkDirPath = project.reinforce.apkDir
-                    String reinforcedApkDirPath = project.reinforce.reinforcedApkDir
-                    println("apkDirPath: " + apkDirPath)
                     File apkDir = new File(apkDirPath)
                     if(!apkDir.exists() || !apkDir.isDirectory()){
                         project.logger.error("apkDir不存在或者apkDir不是一个目录")
                         throw new ProjectConfigurationException("apkDir不存在或者apkDir不是一个目录")
                     }
+                    //检测加固之后的存放目录，如果不存在创建一个目录
+                    String reinforcedApkDirPath = project.reinforce.reinforcedApkDir
                     File reinforcedApkDir = new File(reinforcedApkDirPath)
                     if(!reinforcedApkDir.exists()){
                         reinforcedApkDir.mkdirs()
                     }
+                    //遍历加固
                     for(File file : apkDir.listFiles()) {
                         if (file.exists() && file.getName().endsWith(".apk")) {
                             //360加固
                             if(checkQihu(project)){
                                 println("开始360加固...")
-//                                qihuReinforce(project,file)
+                                qihuReinforce(project,file)
                             }
                             //乐固加固
                             if(checkLegu(project)){
                                 println("开始乐固加固...")
-//                                leguReinforce(project,apksignerPath,zipalignPath,file)
+                                leguReinforce(project,apksignerPath,zipalignPath,file)
                             }
 
                         }
