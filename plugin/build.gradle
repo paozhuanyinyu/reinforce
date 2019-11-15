@@ -2,6 +2,7 @@ apply plugin: 'groovy'
 //apply plugin: 'maven'
 apply plugin: 'com.github.dcendents.android-maven' //发布到JitPack
 group='com.github.paozhuanyinyu' //发布到JitPack
+
 dependencies {
     compile gradleApi()
     compile localGroovy()

@@ -39,7 +39,10 @@ class ReinforcePlugin implements Plugin<Project>{
             project.android.applicationVariants.all { variant ->
                 def variantName = variant.name.capitalize()
                 println("variantName: " + variantName)
-                def assemble = variant.assembleProvider.get()
+                def assemble = variant.assemble
+                if (variant.hasProperty('assembleProvider')) {
+                    assemble = variant.assembleProvider.get()
+                }
                 println("assemble: " + assemble)
                 project.task("assemble${variantName}Reinforce").dependsOn(assemble).doFirst {
                     println("doFirst")
