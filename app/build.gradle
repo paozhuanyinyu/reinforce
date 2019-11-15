@@ -1,36 +1,36 @@
 apply plugin: 'com.android.application'
-apply plugin: 'reinforce'
-
-reinforce {
-    def prpe = new Properties()
-    def input = project.rootProject.file('local.properties').newInputStream()
-    prpe.load(input)
-    def leguSecretId = prpe.getProperty('path.legu.secretId')
-    def leguSecretKey = prpe.getProperty('path.legu.secretKey')
-    def qihuAccount = prpe.getProperty('path.qihu.account')
-    def qihuPassword = prpe.getProperty('path.qihu.password')
-
-
-    keystorePath = rootDir.getAbsolutePath() + File.separator + "reinforce_test.jks"
-    keystorePassword = "reinforce92"
-    alias = "reinforce_alisa"
-    aliasPassword = "reinforce92"
-    apkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "release"
-    reinforcedApkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "jiagu"
-    enableQihu = true
-    qihu {
-        sourcePath = "/Users/yukai/Documents/jiagu/360/jiagu/jiagu.jar"
-        account = qihuAccount
-        password = qihuPassword
-    }
-
-    enableLegu = true
-    legu {
-        sourcePath = "/Users/yukai/Documents/jiagu/tencent/ms-shield.jar"
-        secretId = leguSecretId
-        secretKey = leguSecretKey
-    }
-}
+//apply plugin: 'reinforce'
+//
+//reinforce {
+//    def prpe = new Properties()
+//    def input = project.rootProject.file('local.properties').newInputStream()
+//    prpe.load(input)
+//    def leguSecretId = prpe.getProperty('path.legu.secretId')
+//    def leguSecretKey = prpe.getProperty('path.legu.secretKey')
+//    def qihuAccount = prpe.getProperty('path.qihu.account')
+//    def qihuPassword = prpe.getProperty('path.qihu.password')
+//
+//
+//    keystorePath = rootDir.getAbsolutePath() + File.separator + "reinforce_test.jks"
+//    keystorePassword = "reinforce92"
+//    alias = "reinforce_alisa"
+//    aliasPassword = "reinforce92"
+//    apkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "release"
+//    reinforcedApkDir = projectDir.getAbsolutePath() + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "jiagu"
+//    enableQihu = true
+//    qihu {
+//        sourcePath = "/Users/yukai/Documents/jiagu/360/jiagu/jiagu.jar"
+//        account = qihuAccount
+//        password = qihuPassword
+//    }
+//
+//    enableLegu = true
+//    legu {
+//        sourcePath = "/Users/yukai/Documents/jiagu/tencent/ms-shield.jar"
+//        secretId = leguSecretId
+//        secretKey = leguSecretKey
+//    }
+//}
 
 
 android {

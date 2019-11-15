@@ -11,15 +11,15 @@ repositories {
 }
 
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            //设置插件的GAV参数
-            pom.groupId = 'com.kaige.reinforce'
-            pom.artifactId = 'plugin'
-            pom.version = '1.0.0'
-            //文件发布到本地目录
-            repository(url: uri('/Users/yukai/Documents/project/android/plugin/maven/repo'))
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            //设置插件的GAV参数
+//            pom.groupId = 'com.kaige.reinforce'
+//            pom.artifactId = 'plugin'
+//            pom.version = '1.0.0'
+//            //文件发布到本地目录
+//            repository(url: uri('/Users/yukai/Documents/project/android/plugin/maven/repo'))
+//        }
+//    }
+//}
