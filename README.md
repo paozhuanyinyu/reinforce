@@ -78,4 +78,4 @@
 
 ### License
 
-reinforce is released under a Apache-2.0 License. See LICENSE file for details.
+reinforce is released under a Apache-2.0 License. See [LICENSE](LICENSE) file for details.
