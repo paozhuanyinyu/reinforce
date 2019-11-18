@@ -243,7 +243,7 @@ class ReinforcePlugin implements Plugin<Project>{
         String reinforceCommand = 'java -Dfile.encoding=utf-8 -jar ' + project.reinforce.legu.sourcePath + ' -sid ' + project.reinforce.legu.secretId + ' -skey ' + project.reinforce.legu.secretKey + ' -uploadPath ' + file.getAbsolutePath() + ' -downloadPath ' + project.reinforce.reinforcedApkDir
         println("reinforceCommand: " + reinforceCommand)
         CommandResult reinforceCommandResult = executeCommand(reinforceCommand)
-        if((reinforceCommandResult.errorStr != null && reinforceCommandResult.errorStr.trim().length() > 0) || reinforceCommandResult.outputStr.contains("错误码")){
+        if((reinforceCommandResult.errorStr != null && reinforceCommandResult.errorStr.trim().length() > 0) || !reinforceCommandResult.outputStr.contains("加固包下载成功")){
             project.logger.error("乐固加固失败")
             throw new RuntimeException("乐固加固失败")
         }
