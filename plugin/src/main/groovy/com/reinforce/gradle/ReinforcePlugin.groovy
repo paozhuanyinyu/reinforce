@@ -100,7 +100,7 @@ class ReinforcePlugin implements Plugin<Project>{
             if(file.exists()){
                 if(file.isDirectory()){
                     loopFile(project,apksignerPath,zipalignPath,file)
-                }else if(file.isFile() && file.getName().endsWith(".apk")){
+                }else if(file.isFile() && file.getName().endsWith(".apk") && !file.getName().endsWith("jiagu_sign.apk") && !file.getName().endsWith("legu.apk")){
                     println("apk路径： " + file.getAbsolutePath())
                     //360加固
                     if(checkQihu(project)){
