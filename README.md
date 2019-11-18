@@ -1,5 +1,10 @@
-###  这是一个gradle插件，用于打360加固和腾讯乐固加固包，只需要使用一行gradle命令，对于自动化打包非常方便
+### reinforce
+![](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg?style=flat)
+![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)
+![](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
+![](https://img.shields.io/badge/release-1.0.3-brightgreen.svg?style=flat)
 
+  这是一个gradle插件，用于打360加固和腾讯乐固加固包，只需要使用一行gradle命令，对于自动化打包非常方便
 
 
 ###  使用方法：
@@ -7,8 +12,12 @@
 1. 在你的项目根目录的build.gradle里引入以下依赖
 
    ```
+   repositories {
+        maven { url 'https://jitpack.io' }  //添加的远程仓库配置
+    }
+   
    dependencies {     
-       classpath 'com.github.paozhuanyinyu:reinforce:1.0.3'
+       classpath 'com.github.paozhuanyinyu:reinforce:1.0.3'  //依赖的插件版本
    }
    ```
 
@@ -44,14 +53,14 @@
    }
    ```
 
-​       这里需要注意360加固和乐固加固的sourcePath参数，两者都支持命令行加固，需要分别下载jar包到电脑上。
+​      这里需要注意360加固和乐固加固的sourcePath参数，两者都支持命令行加固，需要分别下载jar包到电脑上。
 
 ### 360加固
 
 1. 到[360加固下载页面](https://jiagu.360.cn/#/global/download) 下载360加固软件。
 2. 解压下载的zip文件，在解压目录/jiagu/下面找到jiagu.jar（我电脑是mac，所以目录是360jiagubao_mac/jiagu/jiagu.jar），将jiagu.jar包的全路径配置到上面的qihu下面的sourcePath上。
 
- ### 乐固加固
+### 乐固加固
 
 1. 下载[ms-shield.jar]([https://leguimg.qcloud.com/ms-client/java-tool/1.0.3/ms-shield.jar) 
 2. 将ms-shield.jar包的全路径配置到上面legu下面的sourcePath上
@@ -62,6 +71,11 @@
 
 
 
-然后执行打包命令
+### 然后执行打包命令
 
 `./gradlew clean assemble{variantName,如若没有variant则不写}ReleaseReinforce`
+
+
+### License
+
+reinforce is released under a Apache-2.0 License. See LICENSE file for details.
