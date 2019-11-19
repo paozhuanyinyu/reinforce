@@ -63,7 +63,7 @@
 
 ### 乐固加固
 
-1. 下载[ms-shield.jar]([https://leguimg.qcloud.com/ms-client/java-tool/1.0.3/ms-shield.jar) 
+1. 下载[乐固ms-shield.jar]([https://leguimg.qcloud.com/ms-client/java-tool/1.0.3/ms-shield.jar) 
 
 2. 将ms-shield.jar包的全路径配置到上面legu下面的sourcePath上
 
