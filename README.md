@@ -58,11 +58,13 @@
 ### 360加固
 
 1. 到[360加固下载页面](https://jiagu.360.cn/#/global/download) 下载360加固软件。
+
 2. 解压下载的zip文件，在解压目录/jiagu/下面找到jiagu.jar（我电脑是mac，所以目录是360jiagubao_mac/jiagu/jiagu.jar），将jiagu.jar包的全路径配置到上面的qihu下面的sourcePath上。
 
 ### 乐固加固
 
 1. 下载[ms-shield.jar]([https://leguimg.qcloud.com/ms-client/java-tool/1.0.3/ms-shield.jar) 
+
 2. 将ms-shield.jar包的全路径配置到上面legu下面的sourcePath上
 
 
